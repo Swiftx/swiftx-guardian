@@ -29,13 +29,13 @@ for (var _i = 0, _a = config_1.config.loaders; _i < _a.length; _i++) {
     var loader = _a[_i];
     var ext = loader.extensions.join('|');
     var loaderConfig = {
-        test: new RegExp('\.(' + ext + ')$'),
+        test: new RegExp('\\.(' + ext + ')$'),
         loader: loader.loader
     };
     if ('include' in loader)
         loaderConfig['include'] = loader.include;
     if ('exclude' in loader)
-        loaderConfig['exclude'] = loader.exclude;
+        loaderConfig['exclude'] = new RegExp(loader.exclude);
     loadersConfig.push(loaderConfig);
 }
 // 配置插件

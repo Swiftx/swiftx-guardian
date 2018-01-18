@@ -31,7 +31,8 @@ var defaultConfig = {
         },
         {
             extensions: ['js', 'jsx'],
-            loader: 'babel-loader'
+            loader: 'babel-loader',
+            exclude: 'node_modules'
         },
         {
             extensions: ['css'],

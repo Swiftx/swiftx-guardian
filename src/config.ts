@@ -9,8 +9,8 @@ export const projectRoot = process.cwd();
 export interface LoaderType {
     extensions : Array<string>;
     loader : string;
-    include? : string|Array<string>;
-    exclude? : string|Array<string>;
+    include? : string;
+    exclude? : string;
 }
 
 export interface ConfigType {
@@ -87,7 +87,8 @@ const defaultConfig:ConfigType = {
         },
         {
             extensions : ['js', 'jsx'],
-            loader : 'babel-loader'
+            loader : 'babel-loader',
+            exclude: 'node_modules'
         },
         {
             extensions : ['css'],

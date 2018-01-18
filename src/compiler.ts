@@ -31,13 +31,13 @@ if(userConfig.debug.sourceMap)
 for(let loader of userConfig.loaders){
     let ext = loader.extensions.join('|');
     let loaderConfig = {
-        test : new RegExp('\.('+ext+')$'),
+        test : new RegExp('\\.('+ext+')$'),
         loader : loader.loader
     };
     if('include' in loader)
         loaderConfig['include'] = loader.include;
     if('exclude' in loader)
-        loaderConfig['exclude'] = loader.exclude;
+        loaderConfig['exclude'] = new RegExp(<string>loader.exclude);
     loadersConfig.push(loaderConfig);
 }
 

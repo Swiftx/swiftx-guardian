@@ -35,7 +35,7 @@ for(let loader of userConfig.loaders){
         loader : loader.loader
     };
     if('include' in loader)
-        loaderConfig['include'] = loader.include;
+        loaderConfig['include'] = new RegExp(<string>loader.include);
     if('exclude' in loader)
         loaderConfig['exclude'] = new RegExp(<string>loader.exclude);
     loadersConfig.push(loaderConfig);

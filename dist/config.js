@@ -36,7 +36,13 @@ var defaultConfig = {
         },
         {
             extensions: ['css'],
-            loader: 'style-loader!css-loader?modules'
+            loader: 'style-loader!css-loader?modules',
+            exclude: 'node_modules'
+        },
+        {
+            extensions: ['css'],
+            loader: 'style-loader!css-loader',
+            include: 'node_modules'
         },
         {
             extensions: ['less'],

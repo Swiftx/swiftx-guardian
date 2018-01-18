@@ -33,7 +33,7 @@ for (var _i = 0, _a = config_1.config.loaders; _i < _a.length; _i++) {
         loader: loader.loader
     };
     if ('include' in loader)
-        loaderConfig['include'] = loader.include;
+        loaderConfig['include'] = new RegExp(loader.include);
     if ('exclude' in loader)
         loaderConfig['exclude'] = new RegExp(loader.exclude);
     loadersConfig.push(loaderConfig);

@@ -1,0 +1,10 @@
+{
+  "entry" : {
+    "main" : "index.js",
+    "title" : "测试站点"
+  },
+  "output" : {
+    "index" : "index.html",
+    "path" : "public"
+  }
+}

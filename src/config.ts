@@ -1,0 +1,117 @@
+import * as process from "process";
+import * as fs from "fs";
+import { resolve } from 'path';
+import * as merge from "deepmerge";
+
+// 当前执行所在目录
+export const projectRoot = process.cwd();
+
+export interface LoaderType {
+    extensions : Array<string>;
+    loader : string;
+    include? : string|Array<string>;
+    exclude? : string|Array<string>;
+}
+
+export interface ConfigType {
+
+    /**
+     * 服务器配置
+     */
+    server : {
+        host : string;
+        port : number;
+        root : string;
+    };
+
+    /**
+     * 入口配置
+     */
+    entry : {
+        main : string;
+        favicon : string;
+        index : string;
+        title : string;
+    };
+
+    /**
+     * 编译输出配置
+     */
+    output : {
+        index : string;
+        path : string;
+        filename : string;
+    };
+
+    /**
+     * 加载器配置
+     */
+    loaders : Array<LoaderType>;
+
+    /**
+     * 指定外部配置文件
+     */
+    webpack : boolean|string;
+
+    /**
+     * 调试选项配置
+     */
+    debug : {
+        sourceMap : boolean;
+    };
+
+}
+
+// 用户默认配置项
+const defaultConfig:ConfigType = {
+    server : {
+        host : 'localhost',
+        port : 3000,
+        root : "public"
+    },
+    entry : {
+        main : 'src/index.js',
+        favicon : resolve(__dirname,'../src/favicon.ico'),
+        index : resolve(__dirname,'../src/template.ejs'),
+        title : "index",
+    },
+    output : {
+        index : "index.html",
+        path : "dist",
+        filename : "main.js"
+    },
+    loaders : [
+        {
+            extensions : ['ts', 'tsx'],
+            loader : 'ts-loader'
+        },
+        {
+            extensions : ['js', 'jsx'],
+            loader : 'babel-loader'
+        },
+        {
+            extensions : ['css'],
+            loader : 'style-loader!css-loader?modules'
+        },
+        {
+            extensions : ['less'],
+            loader : 'style-loader!css-loader!less-loader?modules'
+        },
+        {
+            extensions : ['png','jpg', 'gif'],
+            loader : 'url-loader?limit=8192&name=./static/img/[hash].[ext]'
+        }
+    ],
+    webpack : false,
+    debug : {
+        sourceMap : false
+    }
+};
+
+// 加载用户配置
+let userConfig = {};
+if(fs.existsSync(projectRoot+'/'+'.guardian'))
+    userConfig = JSON.parse(fs.readFileSync(projectRoot+'/'+'.guardian').toString());
+
+// 合并用户配置到
+export const config:ConfigType = merge(defaultConfig, userConfig);

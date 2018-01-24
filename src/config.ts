@@ -92,13 +92,7 @@ const defaultConfig:ConfigType = {
         },
         {
             extensions : ['css'],
-            loader : 'style-loader!css-loader?modules',
-            exclude: 'node_modules'
-        },
-        {
-            extensions : ['css'],
             loader : 'style-loader!css-loader',
-            include: 'node_modules'
         },
         {
             extensions : ['less'],
@@ -117,8 +111,8 @@ const defaultConfig:ConfigType = {
 
 // 加载用户配置
 let userConfig = {};
-if(fs.existsSync(projectRoot+'/'+'.guardian'))
-    userConfig = JSON.parse(fs.readFileSync(projectRoot+'/'+'.guardian').toString());
+if(fs.existsSync(projectRoot+'/'+'guardian.json'))
+    userConfig = JSON.parse(fs.readFileSync(projectRoot+'/'+'guardian.json').toString());
 
 // 合并用户配置到
 export const config:ConfigType = merge(defaultConfig, userConfig);

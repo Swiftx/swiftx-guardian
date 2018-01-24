@@ -36,13 +36,7 @@ var defaultConfig = {
         },
         {
             extensions: ['css'],
-            loader: 'style-loader!css-loader?modules',
-            exclude: 'node_modules'
-        },
-        {
-            extensions: ['css'],
             loader: 'style-loader!css-loader',
-            include: 'node_modules'
         },
         {
             extensions: ['less'],
@@ -60,7 +54,7 @@ var defaultConfig = {
 };
 // 加载用户配置
 var userConfig = {};
-if (fs.existsSync(exports.projectRoot + '/' + '.guardian'))
-    userConfig = JSON.parse(fs.readFileSync(exports.projectRoot + '/' + '.guardian').toString());
+if (fs.existsSync(exports.projectRoot + '/' + 'guardian.json'))
+    userConfig = JSON.parse(fs.readFileSync(exports.projectRoot + '/' + 'guardian.json').toString());
 // 合并用户配置到
 exports.config = merge(defaultConfig, userConfig);

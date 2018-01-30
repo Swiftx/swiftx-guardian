@@ -8,7 +8,8 @@ export default function () {
     // 初始化服务器
     const server = express();
     server.use(middleware(compiler, {
-        publicPath : '/'
+        publicPath : '/',
+        logLevel : 'error'
     }));
 
     // 启动服务器并监听

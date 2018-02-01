@@ -54,6 +54,15 @@ export interface ConfigType {
     webpack : boolean|string;
 
     /**
+     * 模拟数据接口
+     */
+    mocks : {
+        root : string;
+        extension : string;
+        cmd  : string;
+    }
+
+    /**
      * 调试选项配置
      */
     debug : {
@@ -112,6 +121,11 @@ const defaultConfig:ConfigType = {
     webpack : false,
     debug : {
         sourceMap : false
+    },
+    mocks : {
+        root : "./mock",
+        extension : ".js",
+        cmd  : "node"
     }
 };
 
@@ -122,3 +136,5 @@ if(fs.existsSync(projectRoot+'/'+'guardian.json'))
 
 // 合并用户配置到
 export const config:ConfigType = merge(defaultConfig, userConfig);
+config.server.root = resolve(projectRoot, config.server.root);
+config.mocks.root = resolve(projectRoot, config.mocks.root);

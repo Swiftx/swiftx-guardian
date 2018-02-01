@@ -56,6 +56,11 @@ var defaultConfig = {
     webpack: false,
     debug: {
         sourceMap: false
+    },
+    mocks: {
+        root: "./mock",
+        extension: ".js",
+        cmd: "node"
     }
 };
 // 加载用户配置
@@ -64,3 +69,5 @@ if (fs.existsSync(exports.projectRoot + '/' + 'guardian.json'))
     userConfig = JSON.parse(fs.readFileSync(exports.projectRoot + '/' + 'guardian.json').toString());
 // 合并用户配置到
 exports.config = merge(defaultConfig, userConfig);
+exports.config.server.root = path_1.resolve(exports.projectRoot, exports.config.server.root);
+exports.config.mocks.root = path_1.resolve(exports.projectRoot, exports.config.mocks.root);

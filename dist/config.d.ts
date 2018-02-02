@@ -44,6 +44,7 @@ export interface ConfigType {
      */
     mocks: {
         root: string;
+        extension: string;
         cmd: string;
     };
     /**

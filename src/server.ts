@@ -4,6 +4,7 @@ import * as middleware from 'webpack-dev-middleware';
 import { config } from "./config";
 import { existsSync } from "fs";
 import { execSync } from 'child_process';
+import {env} from "process";
 
 export default function () {
 
@@ -19,14 +20,18 @@ export default function () {
 
     // 设置模拟接口
     server.all('*', function (req, res) {
-        let apiFile = config.mocks.root+req.path+config.mocks.extension;
-        if(!existsSync(apiFile)){
-            res.send('404');
-            return;
-        }
-        let output = JSON.parse(execSync(config.mocks.cmd+' '+apiFile).toString());
+        let cmd = config.mocks.exec+' '+config.mocks.index;
+        let newEnv = Object.assign({}, env);
+        newEnv.HttpMethod = req.method;
+        let processOutput = execSync(cmd,{env  : newEnv}).toString();
+        let output = JSON.parse('['+processOutput+']');
         res.set('Content-Type','text/json');
-        res.send(output.data);
+        let resBody = '';
+        for(let message of output){
+            if(message.Type === 'body')
+                resBody += message.Content;
+        }
+        res.send(resBody);
     });
 
     // 启动服务器并监听

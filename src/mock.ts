@@ -1,49 +1,34 @@
-import { stdout } from 'process';
-import { mock } from 'mockjs';
-import { isString } from "util";
+import { stdout, env } from 'process';
 
-class Request {
+export class Request {
+
+    public method: string;
+
+    public constructor(env) {
+        this.method = env.HttpMethod.toUpperCase();
+    }
 
 }
 
-class Response {
+
+export class Response {
+
+    protected first:boolean = true;
 
     /**
-     * 设置状态
-     * @type {number}
-     */
-    public state : number = 200;
-
-    protected _data  : string;
-
-    /**
-     * 设置数据
+     * 输出数据
      * @param {string | Object} value
      */
-    public set data(value:string|Object) {
-        if(isString(value)){
-            this._data = value;
-        } else {
-            this._data = JSON.stringify(value);
-        }
-    }
-
-    public toJSON(){
-        return JSON.stringify({
-            state : this.state,
-            data : this._data
-        })
+    public echo(value: string|Object):void{
+        if(this.first) this.first = false;
+        else stdout.write(',');
+        stdout.write(JSON.stringify({
+            Type : 'body',
+            Content : value
+        }));
     }
 
 }
 
-export const api = function (option : Object|Function) {
-    let request : Request = new Request();
-    let response : Response = new Response();
-    if(option instanceof Function){
-        option(request, response);
-    } else {
-        response.data = mock(option);
-    }
-    stdout.write(response.toJSON());
-};
+export const request : Request = new Request(env);
+export const response : Response = new Response();

@@ -57,9 +57,8 @@ export interface ConfigType {
      * 模拟数据接口
      */
     mocks : {
-        root : string;
-        extension : string;
-        cmd  : string;
+        index : string;
+        exec  : string;
     }
 
     /**
@@ -123,9 +122,8 @@ const defaultConfig:ConfigType = {
         sourceMap : false
     },
     mocks : {
-        root : "./mock",
-        extension : ".js",
-        cmd  : "node"
+        index : "./mock.js",
+        exec  : "node"
     }
 };
 
@@ -137,4 +135,4 @@ if(fs.existsSync(projectRoot+'/'+'guardian.json'))
 // 合并用户配置到
 export const config:ConfigType = merge(defaultConfig, userConfig);
 config.server.root = resolve(projectRoot, config.server.root);
-config.mocks.root = resolve(projectRoot, config.mocks.root);
+config.mocks.index = resolve(projectRoot, config.mocks.index);

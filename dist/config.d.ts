@@ -43,9 +43,8 @@ export interface ConfigType {
      * 模拟数据接口
      */
     mocks: {
-        root: string;
-        extension: string;
-        cmd: string;
+        index: string;
+        exec: string;
     };
     /**
      * 调试选项配置

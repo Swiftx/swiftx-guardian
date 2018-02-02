@@ -58,9 +58,8 @@ var defaultConfig = {
         sourceMap: false
     },
     mocks: {
-        root: "./mock",
-        extension: ".js",
-        cmd: "node"
+        index: "./mock.js",
+        exec: "node"
     }
 };
 // 加载用户配置
@@ -70,4 +69,4 @@ if (fs.existsSync(exports.projectRoot + '/' + 'guardian.json'))
 // 合并用户配置到
 exports.config = merge(defaultConfig, userConfig);
 exports.config.server.root = path_1.resolve(exports.projectRoot, exports.config.server.root);
-exports.config.mocks.root = path_1.resolve(exports.projectRoot, exports.config.mocks.root);
+exports.config.mocks.index = path_1.resolve(exports.projectRoot, exports.config.mocks.index);
